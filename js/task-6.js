@@ -1,38 +1,32 @@
-const controls = document.querySelector('#controls');
-const input = controls.querySelector('input');
-const createBtn = controls.querySelector('[data-create]');
-const destroyBtn = controls.querySelector('[data-destroy]');
-const boxes = document.querySelector('#boxes');
+function getRandomHexColor() {
+  return `#${Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, 0)}`;
+}
+const boxes = document.querySelector("div#boxes");
+const btnCreate = document.querySelector("button[data-create]");
+const btnDestroy = document.querySelector("button[data-destroy]");
+let quantity;
 
-// Функція для створення колекції
+btnCreate.addEventListener("click", function () { quantity = document.querySelector("div#controls>input").value });
+btnCreate.addEventListener("click", function () { createBoxes(quantity) })
 function createBoxes(amount) {
-  const elements = [];
-  let size = 30;
-  
-  for (let i = 0; i < amount; i++) {
-    const div = document.createElement('div');
-    div.style.width = `${size}px`;
-    div.style.height = `${size}px`;
-    div.style.backgroundColor = getRandomHexColor();
-    elements.push(div);
-    size += 10;
+  console.log("amount:", amount)
+  let width = 30;
+  let height = 30;
+  const boxesData = [];
+  if (amount <= 0 || amount > 100) return;
+  boxes.innerHTML = "";
+  for (let i = 1; i <= amount; i++) {
+    const randomColor = getRandomHexColor();
+    boxesData.push(`<div style="width:${width}px; height: ${height}px; background-color: ${randomColor}"></div>`)
+    width += 10;
+    height += 10;
   }
-  
-  boxes.append(...elements);
+  document.querySelector("div#controls>input").value = "";
+  return boxes.insertAdjacentHTML("beforeend", boxesData.join(""));
 }
-
-// Функція для очищення колекції
-function destroyBoxes() {
-  boxes.innerHTML = '';
-}
-
-// Обробники подій
-createBtn.addEventListener('click', () => {
-  const amount = parseInt(input.value);
-  if (amount >= 1 && amount <= 100) {
-    destroyBoxes(); // Очищуємо попередні елементи
-    createBoxes(amount);
-  }
+btnDestroy.addEventListener("click", () => {
+  document.querySelector("div#controls>input").value = "";
+  return boxes.innerHTML = "";
 });
-
-destroyBtn.addEventListener('click', destroyBoxes);

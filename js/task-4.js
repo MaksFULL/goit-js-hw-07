@@ -1,24 +1,21 @@
-const form = document.querySelector('.login-form');
+const userForm = document.querySelector("form.login-form");
+userForm.addEventListener("submit", eventForm);
 
-form.addEventListener('submit', event => {
-  event.preventDefault(); // Запобігаємо перезавантаженню сторінки
+class User {
+    constructor(email, pwd) {
+        this.email = email;
+        this.password = pwd;
+    }
+}
 
-  const { email, password } = event.currentTarget.elements;
-  
-  // Перевіряємо, чи заповнені поля
-  if (!email.value.trim() || !password.value.trim()) {
-    alert('All form fields must be filled in');
-    return;
-  }
-
-  // Створюємо об'єкт з даними
-  const formData = {
-    email: email.value.trim(),
-    password: password.value.trim()
-  };
-
-  console.log(formData);
-  
-  // Очищуємо форму
-  form.reset();
-});
+function eventForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const userEmail = (form.elements.email.value).trim();
+    const userPwd = (form.elements.password.value).trim();
+    if(!userEmail || !userPwd) alert('All form fields must be filled in');
+    const newUser = new User(userEmail, userPwd);
+    console.log(newUser)
+    form.reset();
+    return newUser;
+}

@@ -1,9 +1,7 @@
-// Отримуємо посилання на елементи input та span
-const input = document.querySelector('#name-input');
-const output = document.querySelector('#name-output');
-
-// Прослуховуємо подію input
-input.addEventListener('input', event => {
-  const trimmedValue = event.target.value.trim();
-  output.textContent = trimmedValue === '' ? 'Anonymous' : trimmedValue;
+const inputName = document.querySelector("input#name-input");
+const outputName = document.querySelector("span#name-output");
+inputName.addEventListener("input", (event) => {
+    const eventValue = String(event.currentTarget.value).trim();
+    if (eventValue != false) outputName.textContent = eventValue;
+    else if (!eventValue) outputName.textContent = "Anonymous";
 });
